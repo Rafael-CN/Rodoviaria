@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <%-include("../shared/imports.ejs")%>
+  </head>
+  <body class="vh-100 blue-gradient">
+    <%-include("../shared/header.ejs")%>
+
+    <div
+      class="container h-75 d-flex justify-content-center align-items-center"
+    >
+      <div class="card col-8 border-black">
+        <div
+          class="card-header bg-black text-white d-flex justify-content-between"
+        >
+          <h6 class="mt-2 p-1">CADASTRO DE PASSAGENS</h6>
+          <a class="btn btn-light" href="/passagem/listagem">LISTAGEM</a>
+        </div>
+        <form action="/passagem/cadastro" method="post">
+          <div class="card-body p-4">
+            <div class="row mt-2 mb-3 px-3">
+              <div class="col-12">
+                <label class="mb-1" for="viagem">Viagem</label>
+                <select
+                  class="form-select form-select-lg"
+                  name="viagem"
+                  id="viagem"
+                >
+                  <option value="" selected>-</option>
+                  <%Viagens.forEach(function (viagem) {%>
+                  <option value="<%=viagem._id%>">
+                    <%=viagem.cidadeOrigem%> -> <%=viagem.cidadeDestino%>
+                    (<%=moment(viagem.dataPartida).format("DD/MM/YYYY")%>)
+                  </option>
+                  <%})%>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3 px-3">
+              <div class="col-4">
+                <div class="form-floating">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="numAssento"
+                    id="numAssento"
+                    placeholder="Número do assento"
+                    min="1"
+                  />
+                  <label for="numAssento">Número do assento</label>
+                </div>
+              </div>
+              <div class="col-8">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="preco"
+                    id="preco"
+                    placeholder="Preço"
+                  />
+                  <label for="preco">Preço</label>
+                </div>
+              </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-4">
+              <button type="submit" class="btn btn-success col-2">
+                Cadastrar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

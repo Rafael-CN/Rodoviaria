@@ -1,6 +1,8 @@
 const Cliente = require("../models/Cliente");
 const Motorista = require("../models/Motorista");
 const Viagem = require("../models/Viagem");
+const Passagem = require("../models/Passagem");
+const Compra = require("../models/Compra");
 
 function home(req, res) {
   res.render("home.ejs");
@@ -18,12 +20,7 @@ class TelasCliente {
   }
 
   post(req, res) {
-    let cliente = new Cliente({
-      nome: req.body.nome,
-      dataNascimento: req.body.dataNascimento,
-      cpf: req.body.cpf,
-      email: req.body.email,
-    });
+    let cliente = new Cliente({ ...req.body });
 
     cliente.save().then(function () {
       res.redirect("/cliente/listagem");
@@ -43,12 +40,7 @@ class TelasMotorista {
   }
 
   post(req, res) {
-    let motorista = new Motorista({
-      cpf: req.body.cpf,
-      nome: req.body.nome,
-      numRegistro: req.body.numRegistro,
-      telefone: req.body.telefone,
-    });
+    let motorista = new Motorista({ ...req.body });
 
     motorista.save().then(function () {
       res.redirect("/motorista/listagem");
@@ -72,16 +64,79 @@ class TelasViagem {
   }
 
   post(req, res) {
-    let viagem = new Viagem({
-      motorista: req.body.motorista,
-      dataPartida: req.body.dataPartida,
-      dataChegada: req.body.dataChegada,
-      cidadeOrigem: req.body.cidadeOrigem,
-      cidadeDestino: req.body.cidadeDestino,
-    });
+    let viagem = new Viagem({ ...req.body });
 
     viagem.save().then(function () {
       res.redirect("/viagem/listagem");
+    });
+  }
+}
+
+class TelasPassagem {
+  cadastro(req, res) {
+    Viagem.find({}).then(function (viagens) {
+      res.render("ticket/register.ejs", { Viagens: viagens });
+    });
+  }
+
+  listagem(req, res) {
+    Passagem.find({})
+      .populate("viagem")
+      .then(function (passagens) {
+        res.render("ticket/list.ejs", { Passagens: passagens });
+      });
+  }
+
+  post(req, res) {
+    let passagem = new Passagem({ ...req.body });
+    passagem.status = "DISPONÍVEL";
+
+    passagem.save().then(function () {
+      res.redirect("/passagem/listagem");
+    });
+  }
+}
+
+class TelasCompra {
+  cadastro(req, res) {
+    Passagem.find({})
+      .populate("viagem")
+      .then(function (passagens) {
+        Cliente.find({}).then(function (clientes) {
+          res.render("purchase/register.ejs", {
+            Passagens: passagens,
+            Clientes: clientes,
+          });
+        });
+      });
+  }
+
+  listagem(req, res) {
+    Compra.find({})
+      .populate("passagem")
+      .populate("cliente")
+      .populate({
+        path: "passagem",
+        populate: {
+          path: "viagem",
+          model: "Viagem",
+        },
+      })
+      .then(function (compras) {
+        res.render("purchase/list.ejs", { Compras: compras });
+      });
+  }
+
+  post(req, res) {
+    let compra = new Compra({ ...req.body });
+    compra.dataCompra = new Date();
+
+    Passagem.findByIdAndUpdate(req.body.passagem, {
+      status: "VENDIDO",
+    });
+
+    compra.save().then(function () {
+      res.redirect("/compra/listagem");
     });
   }
 }
@@ -91,4 +146,6 @@ module.exports = {
   cliente: TelasCliente.prototype,
   motorista: TelasMotorista.prototype,
   viagem: TelasViagem.prototype,
+  passagem: TelasPassagem.prototype,
+  compra: TelasCompra.prototype,
 };

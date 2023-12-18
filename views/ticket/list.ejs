@@ -11,27 +11,31 @@
     >
       <div class="card col-10 border-black">
         <div class="card-header bg-black text-white">
-          <h6 class="mt-2 p-1">LISTAGEM DE VIAGENS</h6>
+          <h6 class="mt-2 p-1">LISTAGEM DE PASSAGENS</h6>
         </div>
         <div class="card-body">
           <table class="table">
             <thead>
               <tr>
-                <th>Motorista</th>
                 <th>Data de partida</th>
-                <th>Data de chegada</th>
                 <th>Cidade origem</th>
                 <th>Cidade destino</th>
+                <th>Número do assento</th>
+                <th>Preço</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              <%Viagens.forEach(function (viagem) {%>
+              <%Passagens.forEach(function (passagem) {%>
               <tr>
-                <td><%=viagem.motorista.nome%></td>
-                <td><%=moment(viagem.dataPartida).format("DD/MM/YYYY")%></td>
-                <td><%=moment(viagem.dataChegada).format("DD/MM/YYYY")%></td>
-                <td><%=viagem.cidadeOrigem%></td>
-                <td><%=viagem.cidadeDestino%></td>
+                <td>
+                  <%=moment(passagem.viagem.dataPartida).format("DD/MM/YYYY")%>
+                </td>
+                <td><%=passagem.viagem.cidadeOrigem%></td>
+                <td><%=passagem.viagem.cidadeDestino%></td>
+                <td><%=passagem.numAssento%></td>
+                <td><%=passagem.preco%></td>
+                <td><%=passagem.status%></td>
               </tr>
               <%})%>
             </tbody>

@@ -18,4 +18,12 @@ router.get("/viagem/cadastro", controller.viagem.cadastro);
 router.post("/viagem/cadastro", controller.viagem.post);
 router.get("/viagem/listagem", controller.viagem.listagem);
 
+router.get("/passagem/cadastro", controller.passagem.cadastro);
+router.post("/passagem/cadastro", controller.passagem.post);
+router.get("/passagem/listagem", controller.passagem.listagem);
+
+router.get("/compra/cadastro", controller.compra.cadastro);
+router.post("/compra/cadastro", controller.compra.post);
+router.get("/compra/listagem", controller.compra.listagem);
+
 module.exports = router;

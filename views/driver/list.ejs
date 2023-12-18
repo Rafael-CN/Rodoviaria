@@ -2,7 +2,6 @@
 <html lang="pt-br">
   <head>
     <%-include("../shared/imports.ejs")%>
-    <title>Document</title>
   </head>
   <body class="vh-100 blue-gradient">
     <%-include("../shared/header.ejs")%>
@@ -12,32 +11,31 @@
     >
       <div class="card col-10 border-black">
         <div class="card-header bg-black text-white">
-            <h6 class="mt-2 p-1">LISTAGEM DE MOTORISTAS</h3>
-          </div>
-          <div class="card-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Número de registro</th>
-                        <th>Nome</th>
-                        <th>CPF</th>
-                        <th>Telefone</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%Motoristas.forEach(function (motorista) {%>
-                    <%if (motorista.cpf) {%>
-                        <tr>
-                            <td><%=motorista.numRegistro%></td>
-                            <td><%=motorista.nome%></td>
-                            <td><%=motorista.cpf%></td>
-                            <td><%=motorista.telefone%></td>
-                        </tr>
-                    <%}%>
-                    <%})%>
-                </tbody>
-            </table>
-          </div>
+          <h6 class="mt-2 p-1">LISTAGEM DE MOTORISTAS</h6>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Número de registro</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Telefone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%Motoristas.forEach(function (motorista) {%> <%if (motorista.cpf)
+              {%>
+              <tr>
+                <td><%=motorista.numRegistro%></td>
+                <td><%=motorista.nome%></td>
+                <td><%=motorista.cpf%></td>
+                <td><%=motorista.telefone%></td>
+              </tr>
+              <%}%> <%})%>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </body>

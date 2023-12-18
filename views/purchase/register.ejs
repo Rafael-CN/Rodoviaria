@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <%-include("../shared/imports.ejs")%>
+  </head>
+  <body class="vh-100 blue-gradient">
+    <%-include("../shared/header.ejs")%>
+
+    <div
+      class="container h-75 d-flex justify-content-center align-items-center"
+    >
+      <div class="card col-8 border-black">
+        <div
+          class="card-header bg-black text-white d-flex justify-content-between"
+        >
+          <h6 class="mt-2 p-1">CADASTRO DE COMPRAS</h6>
+          <a class="btn btn-light" href="/compra/listagem">LISTAGEM</a>
+        </div>
+        <form action="/compra/cadastro" method="post">
+          <div class="card-body p-4">
+            <div class="row mt-2 mb-3 px-3">
+              <div class="col-7">
+                <label class="mb-1" for="passagem">Passagem</label>
+                <select
+                  class="form-select form-select-lg"
+                  name="passagem"
+                  id="passagem"
+                >
+                  <option value="" selected>-</option>
+                  <%Passagens.forEach(function (passagem) {%>
+                  <option value="<%=passagem._id%>">
+                    Assento n° <%=passagem.numAssento%>
+                    (<%=passagem.viagem.cidadeOrigem%> ->
+                    <%=passagem.viagem.cidadeDestino%>)
+                  </option>
+                  <%})%>
+                </select>
+              </div>
+              <div class="col-5">
+                <label class="mb-1" for="cliente">Cliente</label>
+                <select
+                  class="form-select form-select-lg"
+                  name="cliente"
+                  id="cliente"
+                >
+                  <option value="" selected>-</option>
+                  <%Clientes.forEach(function (cliente) {%>
+                  <option value="<%=cliente._id%>"><%=cliente.nome%></option>
+                  <%})%>
+                </select>
+              </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-4">
+              <button type="submit" class="btn btn-success col-2">
+                Cadastrar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
