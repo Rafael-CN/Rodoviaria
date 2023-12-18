@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <%-include("../shared/imports.ejs")%>
+    <title>Document</title>
+  </head>
+  <body class="vh-100 blue-gradient">
+    <%-include("../shared/header.ejs")%>
+
+    <div
+      class="container h-75 d-flex justify-content-center align-items-center"
+    >
+      <div class="card col-10 border-black">
+        <div class="card-header bg-black text-white">
+          <h6 class="mt-2 p-1">LISTAGEM DE VIAGENS</h6>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Motorista</th>
+                <th>Data de partida</th>
+                <th>Data de chegada</th>
+                <th>Cidade origem</th>
+                <th>Cidade destino</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%Viagens.forEach(function (viagem) {%>
+              <tr>
+                <td><%=viagem.motorista.nome%></td>
+                <td><%=moment(viagem.dataPartida).format("DD/MM/YYYY")%></td>
+                <td><%=moment(viagem.dataChegada).format("DD/MM/YYYY")%></td>
+                <td><%=viagem.cidadeOrigem%></td>
+                <td><%=viagem.cidadeDestino%></td>
+              </tr>
+              <%})%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

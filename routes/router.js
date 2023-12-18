@@ -7,11 +7,15 @@ const controller = require("../controllers/controller");
 router.get("/home", controller.home);
 
 router.get("/cliente/cadastro", controller.cliente.cadastro);
-router.get("/cliente/listagem", controller.cliente.listagem);
 router.post("/cliente/cadastro", controller.cliente.post);
+router.get("/cliente/listagem", controller.cliente.listagem);
 
 router.get("/motorista/cadastro", controller.motorista.cadastro);
-router.get("/motorista/listagem", controller.motorista.listagem);
 router.post("/motorista/cadastro", controller.motorista.post);
+router.get("/motorista/listagem", controller.motorista.listagem);
+
+router.get("/viagem/cadastro", controller.viagem.cadastro);
+router.post("/viagem/cadastro", controller.viagem.post);
+router.get("/viagem/listagem", controller.viagem.listagem);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const Cliente = require("../models/Cliente");
 const Motorista = require("../models/Motorista");
+const Viagem = require("../models/Viagem");
 
 function home(req, res) {
   res.render("home.ejs");
@@ -24,8 +25,7 @@ class TelasCliente {
       email: req.body.email,
     });
 
-    cliente.save().then(function (docs, err) {
-      console.log(docs);
+    cliente.save().then(function () {
       res.redirect("/cliente/listagem");
     });
   }
@@ -50,9 +50,38 @@ class TelasMotorista {
       telefone: req.body.telefone,
     });
 
-    motorista.save().then(function (docs, err) {
+    motorista.save().then(function () {
       res.redirect("/motorista/listagem");
-      console.log(docs);
+    });
+  }
+}
+
+class TelasViagem {
+  cadastro(req, res) {
+    Motorista.find({}).then(function (motoristas) {
+      res.render("trip/register.ejs", { Motoristas: motoristas });
+    });
+  }
+
+  listagem(req, res) {
+    Viagem.find({})
+      .populate("motorista")
+      .then(function (viagens) {
+        res.render("trip/list.ejs", { Viagens: viagens });
+      });
+  }
+
+  post(req, res) {
+    let viagem = new Viagem({
+      motorista: req.body.motorista,
+      dataPartida: req.body.dataPartida,
+      dataChegada: req.body.dataChegada,
+      cidadeOrigem: req.body.cidadeOrigem,
+      cidadeDestino: req.body.cidadeDestino,
+    });
+
+    viagem.save().then(function () {
+      res.redirect("/viagem/listagem");
     });
   }
 }
@@ -61,4 +90,5 @@ module.exports = {
   home,
   cliente: TelasCliente.prototype,
   motorista: TelasMotorista.prototype,
+  viagem: TelasViagem.prototype,
 };
