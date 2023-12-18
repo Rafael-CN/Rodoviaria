@@ -26,6 +26,12 @@ class TelasCliente {
       res.redirect("/cliente/listagem");
     });
   }
+
+  delete(req, res) {
+    Cliente.findByIdAndDelete(req.params.id).then(function () {
+      res.redirect("/cliente/listagem");
+    });
+  }
 }
 
 class TelasMotorista {
@@ -43,6 +49,12 @@ class TelasMotorista {
     let motorista = new Motorista({ ...req.body });
 
     motorista.save().then(function () {
+      res.redirect("/motorista/listagem");
+    });
+  }
+
+  delete(req, res) {
+    Motorista.findByIdAndDelete(req.params.id).then(function () {
       res.redirect("/motorista/listagem");
     });
   }
@@ -70,6 +82,12 @@ class TelasViagem {
       res.redirect("/viagem/listagem");
     });
   }
+
+  delete(req, res) {
+    Viagem.findByIdAndDelete(req.params.id).then(function () {
+      res.redirect("/viagem/listagem");
+    });
+  }
 }
 
 class TelasPassagem {
@@ -92,6 +110,12 @@ class TelasPassagem {
     passagem.status = "DISPONÍVEL";
 
     passagem.save().then(function () {
+      res.redirect("/passagem/listagem");
+    });
+  }
+
+  delete(req, res) {
+    Passagem.findByIdAndDelete(req.params.id).then(function () {
       res.redirect("/passagem/listagem");
     });
   }
@@ -133,10 +157,20 @@ class TelasCompra {
 
     Passagem.findByIdAndUpdate(req.body.passagem, {
       status: "VENDIDO",
+    }).then(function () {
+      compra.save().then(function () {
+        res.redirect("/compra/listagem");
+      });
     });
+  }
 
-    compra.save().then(function () {
-      res.redirect("/compra/listagem");
+  delete(req, res) {
+    Compra.findByIdAndDelete(req.params.id).then(function (result) {
+      Passagem.findByIdAndUpdate(result.passagem._id, {
+        status: "DISPONÍVEL",
+      }).then(function () {
+        res.redirect("/compra/listagem");
+      });
     });
   }
 }

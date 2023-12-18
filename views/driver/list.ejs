@@ -21,6 +21,7 @@
                 <th>Nome</th>
                 <th>CPF</th>
                 <th>Telefone</th>
+                <th class="text-center">Apagar</th>
               </tr>
             </thead>
             <tbody>
@@ -31,6 +32,13 @@
                 <td><%=motorista.nome%></td>
                 <td><%=motorista.cpf%></td>
                 <td><%=motorista.telefone%></td>
+                <td class="text-center">
+                  <a
+                    class="btn btn-danger"
+                    href="/motorista/apagar/<%=motorista._id%>"
+                    >X</a
+                  >
+                </td>
               </tr>
               <%}%> <%})%>
             </tbody>

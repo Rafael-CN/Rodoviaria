@@ -11,32 +11,40 @@
     >
       <div class="card col-10 border-black">
         <div class="card-header bg-black text-white">
-            <h6 class="mt-2 p-1">LISTAGEM DE CLIENTES</h3>
-          </div>
-          <div class="card-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Data de nascimento</th>
-                        <th>CPF</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%Clientes.forEach(function (cliente) {%>
-                    <%if (cliente.cpf) {%>
-                        <tr>
-                            <td><%=cliente.nome%></td>
-                            <td><%=moment(cliente.dataNascimento).format('DD/MM/YYYY')%></td>
-                            <td><%=cliente.cpf%></td>
-                            <td><%=cliente.email%></td>
-                        </tr>
-                    <%}%>
-                    <%})%>
-                </tbody>
-            </table>
-          </div>
+          <h6 class="mt-2 p-1">LISTAGEM DE CLIENTES</h6>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th class="text-center">Data de nascimento</th>
+                <th>CPF</th>
+                <th>Email</th>
+                <th class="text-center">Apagar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%Clientes.forEach(function (cliente) {%> <%if (cliente.cpf) {%>
+              <tr>
+                <td><%=cliente.nome%></td>
+                <td class="text-center">
+                  <%=moment(cliente.dataNascimento).format('DD/MM/YYYY')%>
+                </td>
+                <td><%=cliente.cpf%></td>
+                <td><%=cliente.email%></td>
+                <td class="text-center">
+                  <a
+                    class="btn btn-danger"
+                    href="/cliente/apagar/<%=cliente._id%>"
+                    >X</a
+                  >
+                </td>
+              </tr>
+              <%}%> <%})%>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </body>

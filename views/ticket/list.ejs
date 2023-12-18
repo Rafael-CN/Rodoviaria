@@ -23,6 +23,7 @@
                 <th>Número do assento</th>
                 <th>Preço</th>
                 <th>Status</th>
+                <th class="text-center">Apagar</th>
               </tr>
             </thead>
             <tbody>
@@ -36,6 +37,13 @@
                 <td><%=passagem.numAssento%></td>
                 <td><%=passagem.preco%></td>
                 <td><%=passagem.status%></td>
+                <td class="text-center">
+                  <a
+                    class="btn btn-danger"
+                    href="/passagem/apagar/<%=passagem._id%>"
+                    >X</a
+                  >
+                </td>
               </tr>
               <%})%>
             </tbody>

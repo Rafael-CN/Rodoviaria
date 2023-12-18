@@ -22,6 +22,7 @@
                 <th>Data de chegada</th>
                 <th>Cidade origem</th>
                 <th>Cidade destino</th>
+                <th class="text-center">Apagar</th>
               </tr>
             </thead>
             <tbody>
@@ -32,6 +33,13 @@
                 <td><%=moment(viagem.dataChegada).format("DD/MM/YYYY")%></td>
                 <td><%=viagem.cidadeOrigem%></td>
                 <td><%=viagem.cidadeDestino%></td>
+                <td class="text-center">
+                  <a
+                    class="btn btn-danger"
+                    href="/viagem/apagar/<%=viagem._id%>"
+                    >X</a
+                  >
+                </td>
               </tr>
               <%})%>
             </tbody>

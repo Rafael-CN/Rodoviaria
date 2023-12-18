@@ -23,6 +23,7 @@
                 <th>Número do assento</th>
                 <th>Cliente</th>
                 <th>Data da compra</th>
+                <th class="text-center">Apagar</th>
               </tr>
             </thead>
             <tbody>
@@ -36,6 +37,13 @@
                 <td><%=compra.passagem.numAssento%></td>
                 <td><%=compra.cliente.nome%></td>
                 <td><%=moment(compra.dataCompra).format("DD/MM/YYYY")%></td>
+                <td class="text-center">
+                  <a
+                    class="btn btn-danger"
+                    href="/compra/apagar/<%=compra._id%>"
+                    >X</a
+                  >
+                </td>
               </tr>
               <%})%>
             </tbody>

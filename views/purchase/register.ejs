@@ -27,13 +27,14 @@
                   id="passagem"
                 >
                   <option value="" selected>-</option>
-                  <%Passagens.forEach(function (passagem) {%>
+                  <%Passagens.forEach(function (passagem) {%> <%if
+                  (passagem.status == "DISPONÍVEL") {%>
                   <option value="<%=passagem._id%>">
                     Assento n° <%=passagem.numAssento%>
                     (<%=passagem.viagem.cidadeOrigem%> ->
                     <%=passagem.viagem.cidadeDestino%>)
                   </option>
-                  <%})%>
+                  <%}%> <%})%>
                 </select>
               </div>
               <div class="col-5">
