@@ -5,12 +5,22 @@ const Passagem = require("../models/Passagem");
 const Compra = require("../models/Compra");
 
 function home(req, res) {
-  res.render("home.ejs");
+  Viagem.find({})
+    .populate("motorista")
+    .then(function (viagens) {
+      res.render("home.ejs", { Viagens: viagens });
+    });
 }
 
 class TelasCliente {
   cadastro(req, res) {
-    res.render("client/register.ejs");
+    if (req.params.id) {
+      Cliente.findById(req.params.id).then(function (cliente) {
+        res.render("client/register.ejs", { Cliente: cliente });
+      });
+    } else {
+      res.render("client/register.ejs", { Cliente: null });
+    }
   }
 
   listagem(req, res) {
@@ -20,11 +30,19 @@ class TelasCliente {
   }
 
   post(req, res) {
-    let cliente = new Cliente({ ...req.body });
+    if (req.body.id.length === 0) {
+      let cliente = new Cliente({ ...req.body });
 
-    cliente.save().then(function () {
-      res.redirect("/cliente/listagem");
-    });
+      cliente.save().then(function () {
+        res.redirect("/cliente/listagem");
+      });
+    } else {
+      Cliente.findByIdAndUpdate(req.body.id, {
+        ...req.body,
+      }).then(function () {
+        res.redirect("/cliente/listagem");
+      });
+    }
   }
 
   delete(req, res) {
@@ -36,7 +54,13 @@ class TelasCliente {
 
 class TelasMotorista {
   cadastro(req, res) {
-    res.render("driver/register.ejs");
+    if (req.params.id) {
+      Motorista.findById(req.params.id).then(function (motorista) {
+        res.render("driver/register.ejs", { Motorista: motorista });
+      });
+    } else {
+      res.render("driver/register.ejs", { Motorista: null });
+    }
   }
 
   listagem(req, res) {
@@ -46,11 +70,19 @@ class TelasMotorista {
   }
 
   post(req, res) {
-    let motorista = new Motorista({ ...req.body });
+    if (req.body.id.length === 0) {
+      let motorista = new Motorista({ ...req.body });
 
-    motorista.save().then(function () {
-      res.redirect("/motorista/listagem");
-    });
+      motorista.save().then(function () {
+        res.redirect("/motorista/listagem");
+      });
+    } else {
+      Motorista.findByIdAndUpdate(req.body.id, { ...req.body }).then(
+        function () {
+          res.redirect("/motorista/listagem");
+        }
+      );
+    }
   }
 
   delete(req, res) {
@@ -63,7 +95,21 @@ class TelasMotorista {
 class TelasViagem {
   cadastro(req, res) {
     Motorista.find({}).then(function (motoristas) {
-      res.render("trip/register.ejs", { Motoristas: motoristas });
+      if (req.params.id) {
+        Viagem.findById(req.params.id)
+          .populate("motorista")
+          .then(function (viagem) {
+            res.render("trip/register.ejs", {
+              Motoristas: motoristas,
+              Viagem: viagem,
+            });
+          });
+      } else {
+        res.render("trip/register.ejs", {
+          Motoristas: motoristas,
+          Viagem: null,
+        });
+      }
     });
   }
 
@@ -76,11 +122,17 @@ class TelasViagem {
   }
 
   post(req, res) {
-    let viagem = new Viagem({ ...req.body });
+    if (req.body.id.length === 0) {
+      let viagem = new Viagem({ ...req.body });
 
-    viagem.save().then(function () {
-      res.redirect("/viagem/listagem");
-    });
+      viagem.save().then(function () {
+        res.redirect("/viagem/listagem");
+      });
+    } else {
+      Viagem.findByIdAndUpdate(req.body.id, { ...req.body }).then(function () {
+        res.redirect("/viagem/listagem");
+      });
+    }
   }
 
   delete(req, res) {
@@ -93,7 +145,21 @@ class TelasViagem {
 class TelasPassagem {
   cadastro(req, res) {
     Viagem.find({}).then(function (viagens) {
-      res.render("ticket/register.ejs", { Viagens: viagens });
+      if (req.params.id) {
+        Passagem.findById(req.params.id)
+          .populate("viagem")
+          .then(function (passagem) {
+            res.render("ticket/register.ejs", {
+              Viagens: viagens,
+              Passagem: passagem,
+            });
+          });
+      } else {
+        res.render("ticket/register.ejs", {
+          Viagens: viagens,
+          Passagem: null,
+        });
+      }
     });
   }
 
@@ -106,12 +172,20 @@ class TelasPassagem {
   }
 
   post(req, res) {
-    let passagem = new Passagem({ ...req.body });
-    passagem.status = "DISPONÍVEL";
+    if (req.body.id.length === 0) {
+      let passagem = new Passagem({ ...req.body });
+      passagem.status = "DISPONÍVEL";
 
-    passagem.save().then(function () {
-      res.redirect("/passagem/listagem");
-    });
+      passagem.save().then(function () {
+        res.redirect("/passagem/listagem");
+      });
+    } else {
+      Passagem.findByIdAndUpdate(req.body.id, {
+        ...req.body,
+      }).then(function () {
+        res.redirect("/passagem/listagem");
+      });
+    }
   }
 
   delete(req, res) {
@@ -127,10 +201,21 @@ class TelasCompra {
       .populate("viagem")
       .then(function (passagens) {
         Cliente.find({}).then(function (clientes) {
-          res.render("purchase/register.ejs", {
-            Passagens: passagens,
-            Clientes: clientes,
-          });
+          if (req.params.id) {
+            Compra.findById(req.params.id).then(function (compra) {
+              res.render("purchase/register.ejs", {
+                Passagens: passagens,
+                Clientes: clientes,
+                Compra: compra,
+              });
+            });
+          } else {
+            res.render("purchase/register.ejs", {
+              Passagens: passagens,
+              Clientes: clientes,
+              Compra: null,
+            });
+          }
         });
       });
   }
@@ -152,16 +237,34 @@ class TelasCompra {
   }
 
   post(req, res) {
-    let compra = new Compra({ ...req.body });
-    compra.dataCompra = new Date();
+    if (req.body.id.length === 0) {
+      let compra = new Compra({ ...req.body });
+      compra.dataCompra = new Date();
 
-    Passagem.findByIdAndUpdate(req.body.passagem, {
-      status: "VENDIDO",
-    }).then(function () {
-      compra.save().then(function () {
-        res.redirect("/compra/listagem");
+      Passagem.findByIdAndUpdate(req.body.passagem, {
+        status: "VENDIDO",
+      }).then(function () {
+        compra.save().then(function () {
+          res.redirect("/compra/listagem");
+        });
       });
-    });
+    } else {
+      Compra.findById(req.body.id).then(function (compra) {
+        Passagem.findByIdAndUpdate(compra.passagem._id, {
+          status: "DISPONÍVEL",
+        }).then(function () {
+          Passagem.findByIdAndUpdate(req.body.passagem, {
+            status: "VENDIDO",
+          }).then(function () {
+            Compra.findByIdAndUpdate(req.body.id, {
+              ...req.body,
+            }).then(function () {
+              res.redirect("/compra/listagem");
+            });
+          });
+        });
+      });
+    }
   }
 
   delete(req, res) {

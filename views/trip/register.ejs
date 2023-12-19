@@ -17,6 +17,8 @@
           <a class="btn btn-light" href="/viagem/listagem">LISTAGEM</a>
         </div>
         <form action="/viagem/cadastro" method="post">
+          <input type="hidden" name="id" id="id" value="<%=Viagem ?  Viagem._id : ''%>">
+
           <div class="card-body p-4">
             <div class="row mt-2 mb-3 px-3">
               <div class="col-12">
@@ -26,9 +28,13 @@
                   name="motorista"
                   id="motorista"
                 >
-                  <option value="" selected>-</option>
+                  <option value="" <%= Viagem ? '' : 'selected'%>>-</option>
                   <%Motoristas.forEach(function (motorista) {%>
-                  <option value="<%=motorista._id%>">
+                  <option value="<%=motorista._id%>" 
+                    <%if (Viagem) {%>
+                      <%= Viagem.motorista._id.toString() == motorista._id.toString() ? 'selected' : '' %>
+                    <%}%>
+                    >
                     <%=motorista.nome%>
                   </option>
                   <%})%>
@@ -44,6 +50,7 @@
                     name="dataPartida"
                     id="dataPartida"
                     placeholder="Data de partida"
+                    value="<%= Viagem ? moment(Viagem.dataPartida).format('YYYY-MM-DD') : ''%>"
                   />
                   <label for="dataPartida">Data de partida</label>
                 </div>
@@ -56,6 +63,7 @@
                     name="dataChegada"
                     id="dataChegada"
                     placeholder="Data de chegada"
+                    value="<%= Viagem ? moment(Viagem.dataChegada).format('YYYY-MM-DD') : ''%>"
                   />
                   <label for="dataChegada">Data de chegada</label>
                 </div>
@@ -70,6 +78,7 @@
                     name="cidadeOrigem"
                     id="cidadeOrigem"
                     placeholder="Cidade de origem"
+                    value="<%= Viagem ? Viagem.cidadeOrigem : ''%>"
                   />
                   <label for="cidadeOrigem">Cidade origem</label>
                 </div>
@@ -82,6 +91,7 @@
                     name="cidadeDestino"
                     id="cidadeDestino"
                     placeholder="Cidade destino"
+                    value="<%= Viagem ? Viagem.cidadeDestino : ''%>"
                   />
                   <label for="cidadeDestino">Cidade destino</label>
                 </div>

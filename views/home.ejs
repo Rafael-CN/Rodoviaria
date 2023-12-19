@@ -1,9 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Página inicial</title>
+    <%-include("./shared/imports.ejs")%>
   </head>
-  <body></body>
+  <body class="vh-100 blue-gradient">
+    <%-include("./shared/header.ejs")%>
+
+    <div
+      class="container h-75 d-flex justify-content-center align-items-center"
+    >
+      <div class="card col-8 border-black">
+        <div
+          class="card-header bg-black text-white d-flex justify-content-between"
+        >
+          <h6 class="mt-2 p-1">PÁGINA INICIAL</h6>
+        </div>
+        <div class="card-body p-4">
+          <h6>VIAGENS DISPONÍVEIS</h6>
+
+          <div id="carouselExampleCaptions" class="carousel slide">
+            <div class="carousel-indicators">
+              <%for (let i = 0; i <= Viagens.length - 1; i++) {%>
+              <button
+                type="button"
+                data-bs-target="#carouselExampleCaptions"
+                data-bs-slide-to="<%=i%>"
+                <%if (i == 0) {%>
+                  class="active" 
+                  aria-current="true"
+                <%}%>
+                ></button>
+              <%}%>
+            </div>
+            <div class="carousel-inner">
+              <%for (let i = 0; i <= Viagens.length - 1; i++) {%> <%const viagem
+              = Viagens[i];%>
+              <div class="carousel-item <%= i == 0 ? 'active' : ''%>">
+                <img
+                  src="/images/<%=Math.floor(Math.random() * 11) + 1%>.jpg"
+                  class="d-block w-100 rounded"
+                  height="400"
+
+                  alt="..."
+                />
+                <div class="carousel-caption d-none d-md-block bg-black" style="--bs-bg-opacity: .4;">
+                  <h5><%=viagem.cidadeDestino%></h5>
+                  <p>
+                    Compre agora sua passagem para <%=viagem.cidadeDestino%>, o
+                    ônibus partirá no dia
+                    <%=moment(viagem.dataPartida).format('D')%> de
+                    <%=moment(viagem.dataPartida).format('MMMM')%>
+                  </p>
+                </div>
+              </div>
+              <%}%>
+            </div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

@@ -17,6 +17,7 @@
           <table class="table">
             <thead>
               <tr>
+                <th class="text-center">Editar</th>
                 <th>Motorista</th>
                 <th>Data de partida</th>
                 <th>Data de chegada</th>
@@ -28,6 +29,13 @@
             <tbody>
               <%Viagens.forEach(function (viagem) {%>
               <tr>
+                <td class="text-center">
+                  <a
+                    class="btn btn-light"
+                    href="/viagem/cadastro/<%=viagem._id%>"
+                    >&#9998;</a
+                  >
+                </td>
                 <td><%=viagem.motorista.nome%></td>
                 <td><%=moment(viagem.dataPartida).format("DD/MM/YYYY")%></td>
                 <td><%=moment(viagem.dataChegada).format("DD/MM/YYYY")%></td>

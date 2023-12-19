@@ -17,6 +17,13 @@
           <a class="btn btn-light" href="/passagem/listagem">LISTAGEM</a>
         </div>
         <form action="/passagem/cadastro" method="post">
+          <input
+            type="hidden"
+            name="id"
+            id="id"
+            value="<%= Passagem ? Passagem._id : ''%>"
+          />
+
           <div class="card-body p-4">
             <div class="row mt-2 mb-3 px-3">
               <div class="col-12">
@@ -26,9 +33,13 @@
                   name="viagem"
                   id="viagem"
                 >
-                  <option value="" selected>-</option>
+                  <option value="" <% Passagem ? '' : 'selected' %>>-</option>
                   <%Viagens.forEach(function (viagem) {%>
-                  <option value="<%=viagem._id%>">
+                  <option value="<%=viagem._id%>"  
+                    <%if (Passagem) {%>
+                      <%= Passagem.viagem._id.toString() == viagem._id.toString() ? 'selected' : ''%>
+                    <%}%>
+                    >
                     <%=viagem.cidadeOrigem%> -> <%=viagem.cidadeDestino%>
                     (<%=moment(viagem.dataPartida).format("DD/MM/YYYY")%>)
                   </option>
@@ -46,6 +57,7 @@
                     id="numAssento"
                     placeholder="Número do assento"
                     min="1"
+                    value="<%= Passagem ? Passagem.numAssento : ''%>"
                   />
                   <label for="numAssento">Número do assento</label>
                 </div>
@@ -58,6 +70,7 @@
                     name="preco"
                     id="preco"
                     placeholder="Preço"
+                    value="<%= Passagem ? Passagem.preco : ''%>"
                   />
                   <label for="preco">Preço</label>
                 </div>

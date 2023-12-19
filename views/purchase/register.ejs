@@ -17,19 +17,30 @@
           <a class="btn btn-light" href="/compra/listagem">LISTAGEM</a>
         </div>
         <form action="/compra/cadastro" method="post">
+          <input
+            type="hidden"
+            name="id"
+            id="id"
+            value="<%= Compra ? Compra._id : ''%>"
+          />
+
           <div class="card-body p-4">
             <div class="row mt-2 mb-3 px-3">
-              <div class="col-7">
+              <div class="col-6">
                 <label class="mb-1" for="passagem">Passagem</label>
                 <select
                   class="form-select form-select-lg"
                   name="passagem"
                   id="passagem"
                 >
-                  <option value="" selected>-</option>
+                  <option value="" <%= Compra ? '' : 'selected' %>>-</option>
                   <%Passagens.forEach(function (passagem) {%> <%if
                   (passagem.status == "DISPONÍVEL") {%>
-                  <option value="<%=passagem._id%>">
+                  <option value="<%=passagem._id%>"
+                    <%if (Compra) {%>
+                      <%= Compra.passagem._id.toString() == passagem._id.toString() ? 'selected' : ''%>
+                    <%}%>
+                    >
                     Assento n° <%=passagem.numAssento%>
                     (<%=passagem.viagem.cidadeOrigem%> ->
                     <%=passagem.viagem.cidadeDestino%>)
@@ -37,16 +48,22 @@
                   <%}%> <%})%>
                 </select>
               </div>
-              <div class="col-5">
+              <div class="col-6">
                 <label class="mb-1" for="cliente">Cliente</label>
                 <select
                   class="form-select form-select-lg"
                   name="cliente"
                   id="cliente"
                 >
-                  <option value="" selected>-</option>
+                  <option value="" <%= Compra ? '' : 'selected' %> selected>-</option>
                   <%Clientes.forEach(function (cliente) {%>
-                  <option value="<%=cliente._id%>"><%=cliente.nome%></option>
+                  <option value="<%=cliente._id%>"
+                    <%if (Compra) {%>
+                      <%= Compra.cliente._id.toString() == cliente._id.toString() ? 'selected' : ''%>
+                    <%}%>
+                    >
+                    <%=cliente.nome%>
+                  </option>
                   <%})%>
                 </select>
               </div>

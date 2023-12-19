@@ -17,6 +17,7 @@
           <table class="table">
             <thead>
               <tr>
+                <th class="text-center">Editar</th>
                 <th>Data de partida</th>
                 <th>Cidade origem</th>
                 <th>Cidade destino</th>
@@ -29,6 +30,13 @@
             <tbody>
               <%Compras.forEach(function (compra) {%>
               <tr>
+                <td class="text-center">
+                  <a
+                    class="btn btn-light"
+                    href="/compra/cadastro/<%=compra._id%>"
+                    >&#9998;</a
+                  >
+                </td>
                 <td>
                   <%=moment(compra.passagem.viagem.dataPartida).format("DD/MM/YYYY")%>
                 </td>

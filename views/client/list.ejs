@@ -17,6 +17,7 @@
           <table class="table">
             <thead>
               <tr>
+                <th class="text-center">Editar</th>
                 <th>Nome</th>
                 <th class="text-center">Data de nascimento</th>
                 <th>CPF</th>
@@ -27,6 +28,13 @@
             <tbody>
               <%Clientes.forEach(function (cliente) {%> <%if (cliente.cpf) {%>
               <tr>
+                <td class="text-center">
+                  <a
+                    class="btn btn-light"
+                    href="/cliente/cadastro/<%=cliente._id%>"
+                    >&#9998;</a
+                  >
+                </td>
                 <td><%=cliente.nome%></td>
                 <td class="text-center">
                   <%=moment(cliente.dataNascimento).format('DD/MM/YYYY')%>

@@ -17,6 +17,7 @@
           <table class="table">
             <thead>
               <tr>
+                <th>Editar</th>
                 <th>Número de registro</th>
                 <th>Nome</th>
                 <th>CPF</th>
@@ -28,6 +29,13 @@
               <%Motoristas.forEach(function (motorista) {%> <%if (motorista.cpf)
               {%>
               <tr>
+                <td class="text-center">
+                  <a
+                    class="btn btn-light"
+                    href="/motorista/cadastro/<%=motorista._id%>"
+                    >&#9998;</a
+                  >
+                </td>
                 <td><%=motorista.numRegistro%></td>
                 <td><%=motorista.nome%></td>
                 <td><%=motorista.cpf%></td>
